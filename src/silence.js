@@ -92,6 +92,7 @@
                 this.buildPostRewardBtn();
                 this.buildToolbar();
                 this.buildPostCommentAvatars();
+                this.setCommentMySelf();//设置区分楼主回复与其他人的回复
             } else {
                 this.goIntoNormalMode();
 
@@ -235,6 +236,18 @@
                 }, 500);
             }
         }
+
+        /****update：将楼主的评论添加class类型：feedbackMyself
+         * 为了实现对话式评论（楼主在右，其他人在左）
+         */
+        setCommentMySelf() {
+            $('.feedbackItem').each(function() {
+                if($(this).find('.feedbackListSubtitle .louzhu').length>0) {
+                    $(this).addClass('feedbackMyself');
+                }
+            });
+        }
+
 
         /**
          * 构建赞赏按钮

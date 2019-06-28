@@ -1,6 +1,7 @@
 // @import "./themes/default.less";
-@import "./themes/goddess.less";
+//@import "./themes/goddess.less";
 // @import "./themes/dark.less";
+@import "./themes/example.less";
 
 body {
     background: @blog-bg-color;
@@ -32,7 +33,7 @@ a {
 #comment_form_container p:nth-of-type(3),
 #homepage_top_pager,
 #author_profile,
-#green_channel,
+//#green_channel,//update:启用文末的点赞转发模块，因为让点赞模块悬浮了，所以文末就没有了
 #blogTitle h2,
 #blogCalendar,
 #sidebar_shortcut,
@@ -1108,11 +1109,11 @@ a {
     }
 
     .alipay:after {
-        content: '支付宝，扫一扫';
+        content: '支付宝自动赞赏1元';//update
     }
 
     .wechat:after {
-        content: '微信，扫一扫';
+        content: '微信自动赞赏1元';//update
     }
 }
 
@@ -1138,20 +1139,29 @@ a {
 /* 推荐|收藏|反对|赞赏 */
 
 #div_digg {
-    position: static;
-    float: none;
-    margin: 75px auto;
-    z-index: -1;
-    width: 370px;
+    //position: static;
+    //float: none;
+    //margin: 75px auto;
+    //z-index: -1;
+    //width: 280px;
 
-    .favorite,
-    .reward,
+    //update：使其停靠悬浮
+    width: 85px;
+    padding: 5px;
+    border-radius: 5px;
+    position: fixed;
+    right: 200px;
+    bottom: 80px;
+    z-index: 999;
+
+    //.buryit
     .diggit,
-    .buryit {
+    .favorite,
+    .reward {
         background: #FFF;
-        margin: 0;
+        margin: 3px;//update
         display: inline-block;
-        width: auto;
+        width: 85px;
         height: 32px;
         border-width: 0px;
         cursor: pointer;
@@ -1165,7 +1175,7 @@ a {
     .favorite {
         background-color: #2db7f5;
         border-color: #2db7f5;
-        margin: 0 5px;
+        //margin: 0 5px;//update
 
         &:hover {
             background-color: #57c5f7;
@@ -1176,7 +1186,7 @@ a {
     .reward {
         background-color: #e13d13;
         border-color: #e13d13;
-        margin: 0 5px;
+        //margin: 0 5px;//update
 
         &:hover {
             background-color: #f16643;
@@ -1195,6 +1205,7 @@ a {
     }
 
     .buryit {
+        display: none;//update:隐藏反对按钮（emmmmm......有点邪恶）
         background-color: #f90;
         border-color: #f90;
 
@@ -1223,12 +1234,12 @@ a {
 }
 
 #div_digg .reward .rewardnum:before {
-    content: '赞赏';
+    content: '打赏';
     font-size: 15px;
 }
 
 #div_digg .diggit .diggnum:before {
-    content: '推荐';
+    content: '点赞';
     font-size: 15px;
     margin-right: 5px;
 }
@@ -1238,6 +1249,52 @@ a {
     font-size: 15px;
     margin-right: 5px;
 }
+
+/* update：显示GreenChanel */
+#green_channel{
+    text-align:center;
+    font-weight:normal;
+    font-size:13px;
+    width:100%;
+    border:#ccc;
+    color:#fff;
+    border-radius:4px;
+    margin:5px auto;
+}
+#green_channel a {
+    background: #FFF;
+    padding: 6px 12px;
+    border-radius: 5px;//缩小圆角弧度
+}
+#green_channel #green_channel_digg {//点赞
+    background-color: #18b566;
+    border-color: #18b566;
+
+    &:hover {
+        background-color: #47cb89;
+        border-color: #47cb89;
+    }
+}
+#green_channel_follow {//关注
+    background-color: #e13d13;
+    border-color: #e13d13;
+
+    &:hover {
+        background-color: #f16643;
+        border-color: #f16643;
+    }
+}
+#green_channel #green_channel_favorite {//收藏
+    background-color: #2db7f5;
+    border-color: #2db7f5;
+
+    &:hover {
+        background-color: #57c5f7;
+        border-color: #57c5f7;
+    }
+}
+/**/
+
 
 /* 评论区 */
 
@@ -1447,6 +1504,27 @@ a {
     }
 }
 
+
+/* update：设置对话式评论列表（自己的评论在右边） */
+.feedbackMyself {
+    .feedbackCon{
+        .esa-comment-avatar{
+            float: right;
+            margin-right: 0px;
+            margin-left: 10px;
+        }
+    } 
+    .feedbackListSubtitle {
+        text-align: right;
+        .feedbackManage{
+            float: left;
+            text-align: left;
+        }
+    }
+}
+
+
+
 /* Github 角标 */
 
 .github-corner:hover .octo-arm {
@@ -1472,14 +1550,21 @@ a {
 }
 
 ::-webkit-scrollbar {
-    width: 3px;
+    width: 15px;//update
     height: 3px;
+    -webkit-appearance:none;//update
 }
 
 ::-webkit-scrollbar-thumb {
-    border-radius: 1px;
-    box-shadow: inset 0 0 5px @blog-font-color;
-    background: @blog-font-color;
+    //border-radius: 1px;
+    //box-shadow: inset 0 0 5px @blog-font-color;
+    //background: @blog-font-color;
+    //修改：右侧滑动下拉条样式，增大♂增粗♀圆角
+    border-radius:6px;
+    height:5px;border:1px solid transparent;
+    border-top:none;border-bottom:none;
+    background-color:rgba(0,0,0,.3);
+    background-clip:padding-box;
 }
 
 ::-webkit-scrollbar-track {
