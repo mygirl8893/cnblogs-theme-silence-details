@@ -79,7 +79,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     this.buildPostRewardBtn();
                     this.buildToolbar();
                     this.buildPostCommentAvatars();
-                    this.setCommentMySelf();
+                    this.setCommentMySelf(); //设置区分楼主回复与其他人的回复
                 } else {
                     this.goIntoNormalMode();
                 }
@@ -158,6 +158,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 // Build a tags button on navbar.
                 var $navList = $(this.cnblogs.navList);
                 $navList.find('li').eq(1).after('<li><a id="blog_nav_tags" class="menu" href="https://www.cnblogs.com/' + currentBlogApp + '/tag">\u6807\u7B7E</a></li>');
+                //update：添加顶部赞赏连链接
+                $navList.find('li').eq(1).after('<li><a id="blog_nav_reward" class="menu" href="https://www.cnblogs.com/RayWang/p/11226185.html">\u6253\u8D4F\u4E00\u4E0B</a></li>');
 
                 $.each($navList.find('li'), function (index, nav) {
                     $(nav).append('<i></i>');
@@ -242,8 +244,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 }
             }
 
-            /****修改：将楼主的评论添加class类型：feedbackMyself
-             * 为了实现评论置右
+            /****update：将楼主的评论添加class类型：feedbackMyself
+             * 为了实现对话式评论（楼主在右，其他人在左）
              */
 
         }, {
@@ -267,26 +269,30 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                 var config = this.defaluts.reward;
                 if (config.enable) {
+                    /*
                     if (!config.wechat && !config.alipay) {
-                        this.showMessage('Error\uFF1A\u5FAE\u4FE1\u6216\u652F\u4ED8\u5B9D\u8D5E\u8D4F\u4E8C\u7EF4\u7801\u8BF7\u81F3\u5C11\u914D\u7F6E\u4E00\u4E2A');
+                        this.showMessage(`Error：微信或支付宝赞赏二维码请至少配置一个`);
                         return;
                     }
-                    var content = '<div class="esa-reward">\n                <div class="esa-reward-close">\u2715</div>\n                <h2>"' + config.title + '"</h2>\n                <div class="esa-reward-container">';
-                    if (config.wechat) {
-                        content += '<div class="wechat"><img src="' + config.wechat + '"></div>';
+                     let content = `<div class="esa-reward">
+                    <div class="esa-reward-close">✕</div>
+                    <h2>"${config.title}"</h2>
+                    <div class="esa-reward-container">`;
+                     if (config.wechat) {
+                        content += `<div class="wechat"><img src="${config.wechat}"></div>`
                     }
                     if (config.alipay) {
-                        content += '<div class="alipay"><img src="' + config.alipay + '"></div>';
+                        content += `<div class="alipay"><img src="${config.alipay}"></div>`;
                     }
-                    content += '</div></div>';
+                     content += `</div></div>`;
                     $('body').append(content);
-
-                    $('.esa-reward-close').on('click', function () {
+                     $('.esa-reward-close').on('click', () => {
                         $(".esa-reward").fadeOut();
                     });
+                    */
 
                     var builder = function builder() {
-                        $(_this3.cnblogs.postDigg).prepend('<div class="reward"><span class="rewardnum" id="reward_count"></span></div>');
+                        $(_this3.cnblogs.postDigg).prepend('<div class="reward"><a href="https://www.cnblogs.com/RayWang/p/11226185.html" target="_blank"><span class="rewardnum" id="reward_count"></span></a></div>');
                         $(_this3.cnblogs.postDigg).find('.reward').on('click', function () {
                             $(".esa-reward").fadeIn();
                         });
@@ -527,7 +533,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                 var catalog = this.defaluts.catalog;
 
-                $('body').append('<div class="esa-toolbar">\n                <button class="esa-toolbar-gotop"><div class="tips">\u8FD4\u56DE\u9876\u90E8</div></button>\n                <button class="esa-toolbar-contents"><div class="tips">\u9605\u8BFB\u76EE\u5F55</div></button>\n                <button class="esa-toolbar-follow"><div class="tips">\u5173\u6CE8\u535A\u4E3B</div></button>\n            </div>');
+                /*
+                $('body').append(`<div class="esa-toolbar">
+                    <button class="esa-toolbar-gotop"><div class="tips">返回顶部</div></button>
+                    <button class="esa-toolbar-contents"><div class="tips">阅读目录</div></button>
+                    <button class="esa-toolbar-follow"><div class="tips">关注博主</div></button>
+                </div>`);
+                */
+
+                $('body').append('<div class="esa-toolbar">\n                <button class="esa-toolbar-contents">\u76EE\u5F55</button>\n                <button class="esa-toolbar-follow">\u5173\u6CE8</button>\n           </div>');
 
                 var $btnGotop = $('.esa-toolbar-gotop');
                 var $btnContents = $('.esa-toolbar-contents');

@@ -10,6 +10,29 @@ body {
     font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif !important;
 }
 
+//update:背景图片
+/*
+body:before {
+    background: url(https://img2018.cnblogs.com/blog/1327955/201907/1327955-20190717133128399-403264923.jpg) center/cover no-repeat;
+    content: '';
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.08;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    -webkit-filter: grayscale(40%);
+    -moz-filter: grayscale(40%);
+    -ms-filter: grayscale(40%);
+    -o-filter: grayscale(40%);
+    filter: grayscale(40%);
+    filter: gray;
+}
+*/
+
 a {
     transition: all 0.3s ease !important;
 
@@ -39,7 +62,7 @@ a {
 #sidebar_shortcut,
 #sidebar_recentposts,
 #sidebar_scorerank,
-#sidebar_recentcomments,
+//#sidebar_recentcomments,//update:启用最新评论模块
 #sidebar_topcommentedposts,
 #sidebar_postarchive,
 #sidebar_imagecategory,
@@ -111,9 +134,14 @@ a {
                 left: 0;
             }
 
-            #blog_nav_tags {
+            
+            #blog_nav_tags,//标签
+            #blog_nav_newpost,//新随笔
+            #blog_nav_rss//订阅
+            {
                 display: none;
             }
+
 
             i {
                 width: 0;
@@ -200,6 +228,7 @@ a {
     }
 }
 
+//模块标题
 .catListTitle {
     position: relative;
     text-align: left;
@@ -218,12 +247,12 @@ a {
     }
 }
 
-#sidebar_toptags li,
-#sidebar_categories li {
+#sidebar_toptags li,//我的标签
+#sidebar_categories li {//随笔分类
     font-size: 15px;
     height: 40px;
     margin: 0;
-    padding-left: 15px;
+    //padding-left: 15px;//update
     padding-right: 15px;
     line-height: 42px;
     white-space: nowrap;
@@ -251,11 +280,43 @@ a {
     }
 }
 
-#sidebar_topviewedposts li,
-#sidebar_topdiggedposts li {
-    margin: 12px 0;
+#sidebar_recentcomments {//update：最新评论
+    li{
+        margin: 12px 0;
+        font-size: 15px;
+        //padding-left: 15px;
+        padding-right: 15px;
+        text-align: justify;
+
+        a {
+            &:link,
+            &:visited,
+            &:active,
+            &:hover {
+                color: @blog-font-color;
+            }
+        }
+        
+    }
+
+    .recent_comment_title{
+        font-size: 15px;
+    }
+    .recent_comment_body{
+        color: #666;
+    }
+    .recent_comment_author//留言人昵称
+    {
+        font-size: 10px;
+        text-align: right;
+    }
+}
+
+#sidebar_topviewedposts li,//阅读排行
+#sidebar_topdiggedposts li {//推荐排行
+    margin: 20px 0;//update
     font-size: 15px;
-    padding-left: 15px;
+    //padding-left: 15px;//update
     padding-right: 15px;
     text-align: justify;
 
@@ -270,11 +331,12 @@ a {
     }
 }
 
+.catListTitle,//最新评论标题
 .entrylistTitle,
 .PostListTitle,
 .thumbTitle,
 .myposts_title,
-#taglist_title {
+#taglist_title{
     padding-bottom: 3px;
     padding-right: 10px;
     width: 100%;
@@ -284,6 +346,40 @@ a {
     font-weight: 300;
     margin-top: 15px;
 }
+
+//update:主页左侧栏，标题添加可爱emoji小图标
+#sidebar_toptags .catListTitle {//我的标签
+    padding-left: 30px!important;
+    &::before {
+        content: '🔖';
+    }
+}
+#sidebar_categories .catListTitle {//随笔分类
+    padding-left: 30px!important;
+    &::before {
+        content: '📂';
+    }
+}
+#sidebar_recentcomments .catListTitle {//最新评论
+    padding-left: 30px!important;
+    &::before {
+        content: '💬';
+    }
+}
+#sidebar_topviewedposts .catListTitle {//阅读排行
+    padding-left: 30px!important;
+    &::before {
+        content: '👀';
+    }
+}
+#sidebar_topdiggedposts .catListTitle {//推荐排行
+    padding-left: 30px!important;
+    &::before {
+        content: '👍';
+    }
+}
+
+
 
 /* 标签列表 */
 #myposts {
@@ -337,6 +433,10 @@ a {
     padding-left: 0;
     border-bottom: none;
 
+    &:before {//update:列表的随笔标题前添加图标
+        content: '✒️';
+    }
+
     a {
         color: @blog-font-color;
     }
@@ -349,7 +449,9 @@ a {
     font-family: inherit;
     padding-left: 0;
 
-    .c_b_p_desc {
+    .c_b_p_desc {//摘要
+        font-size: 15px;
+        color: #666;
         img {
             height: 100px;
             margin-left: 10px;
@@ -365,6 +467,10 @@ a {
             display: table;
             color: @blog-font-color;
             border-color: @blog-font-color;
+
+            &:before {//update:在"阅读前文"前面添加一个小放大镜图标
+                content: '🔎';
+            }
 
             &:after {
                 content: ' »';
@@ -820,17 +926,21 @@ a {
     }
 
     .esa-toolbar-contents {
-        background-image: data-uri('./images/contents.png');
+        //background-image: data-uri('./images/contents.png');
+        //update
+        border-radius: 50%;//圆角
     }
 
     .esa-toolbar-follow {
-        background-image: data-uri('./images/follow.png');
+        //background-image: data-uri('./images/follow.png');
+        //update
+        border-radius: 50%;//圆角
     }
 }
 
 /* 博主头像 */
 .esa-profile-avatar {
-    margin-left: 15px;
+    //margin-left: 15px;//update
     margin-top: 15px;
     border-radius: 3px;
     width: 200px;
@@ -1151,8 +1261,8 @@ a {
     padding: 5px;
     border-radius: 5px;
     position: fixed;
-    right: 200px;
-    bottom: 80px;
+    right: 80px;
+    bottom: 7px;
     z-index: 999;
 
     //.buryit
@@ -1240,9 +1350,10 @@ a {
 }
 
 #div_digg .diggit .diggnum:before {
-    content: '点赞 1';
+    content: '点赞';
     font-size: 15px;
-    margin-right: 0px;
+    margin-right: 5px;
+    //margin-right: 0px;
 }
 
 #div_digg .buryit .burynum:before {
@@ -1674,6 +1785,7 @@ a {
         li {
             float: none;
 
+            //标签导航
             #blog_nav_tags {
                 display: block !important;
             }

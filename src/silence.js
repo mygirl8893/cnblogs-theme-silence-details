@@ -158,6 +158,8 @@
             // Build a tags button on navbar.
             let $navList = $(this.cnblogs.navList);
             $navList.find('li').eq(1).after(`<li><a id="blog_nav_tags" class="menu" href="https://www.cnblogs.com/${currentBlogApp}/tag">标签</a></li>`);
+            //update：添加顶部赞赏连链接
+            $navList.find('li').eq(1).after(`<li><a id="blog_nav_reward" class="menu" href="https://www.cnblogs.com/RayWang/p/11226185.html">打赏一下</a></li>`);
 
             $.each($navList.find('li'), (index, nav) => {
                 $(nav).append('<i></i>');
@@ -255,29 +257,34 @@
         buildPostRewardBtn() {
             const config = this.defaluts.reward;
             if (config.enable) {
+                /*
                 if (!config.wechat && !config.alipay) {
                     this.showMessage(`Error：微信或支付宝赞赏二维码请至少配置一个`);
                     return;
                 }
+
                 let content = `<div class="esa-reward">
                 <div class="esa-reward-close">✕</div>
                 <h2>"${config.title}"</h2>
                 <div class="esa-reward-container">`;
+
                 if (config.wechat) {
                     content += `<div class="wechat"><img src="${config.wechat}"></div>`
                 }
                 if (config.alipay) {
                     content += `<div class="alipay"><img src="${config.alipay}"></div>`;
                 }
+
                 content += `</div></div>`;
                 $('body').append(content);
 
                 $('.esa-reward-close').on('click', () => {
                     $(".esa-reward").fadeOut();
                 });
+                */
 
                 let builder = () => {
-                    $(this.cnblogs.postDigg).prepend(`<div class="reward"><span class="rewardnum" id="reward_count"></span></div>`);
+                    $(this.cnblogs.postDigg).prepend(`<div class="reward"><a href="https://www.cnblogs.com/RayWang/p/11226185.html" target="_blank"><span class="rewardnum" id="reward_count"></span></a></div>`);
                     $(this.cnblogs.postDigg).find('.reward').on('click', () => {
                         $(".esa-reward").fadeIn();
                     });
@@ -515,11 +522,18 @@
         buildToolbar() {
             const catalog = this.defaluts.catalog;
 
+            /*
             $('body').append(`<div class="esa-toolbar">
                 <button class="esa-toolbar-gotop"><div class="tips">返回顶部</div></button>
                 <button class="esa-toolbar-contents"><div class="tips">阅读目录</div></button>
                 <button class="esa-toolbar-follow"><div class="tips">关注博主</div></button>
             </div>`);
+            */
+
+           $('body').append(`<div class="esa-toolbar">
+                <button class="esa-toolbar-contents">目录</button>
+                <button class="esa-toolbar-follow">关注</button>
+           </div>`);
 
             let $btnGotop = $('.esa-toolbar-gotop');
             let $btnContents = $('.esa-toolbar-contents');
